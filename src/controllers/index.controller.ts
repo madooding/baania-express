@@ -33,9 +33,9 @@ export default class IndexController {
       const skip = Number(req.query.skip) || 0
       const take = Number(req.query.take) || 5
 
-      const homes: Home[] = await this.homeService.paginate(skip, take)
+      const { homes, count } = await this.homeService.paginate(skip, take)
 
-      res.status(200).json({ payload: homes, count: homes.length })
+      res.status(200).json({ payload: homes, count })
     } catch (error) {
       next(error)
     }

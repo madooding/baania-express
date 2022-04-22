@@ -9,10 +9,11 @@ class HomeService extends Repository<HomeEntity> {
     return createHomeData
   }
 
-  public async paginate(skip = 0, take = 5): Promise<Home[]> {
+  public async paginate(skip = 0, take = 5) {
     const homes: Home[] = await HomeEntity.createQueryBuilder('home').skip(skip).take(take).getMany()
+    const count = await HomeEntity.createQueryBuilder('home').getCount()
 
-    return homes
+    return { homes, count }
   }
 
   public async getPostcodes(): Promise<Pick<Home, 'post_code'>[]> {
